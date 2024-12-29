@@ -20,12 +20,16 @@ Bu klasör CortexAI SDK'sının nasıl kullanılacağını gösteren örnek uygu
    # veya
    pnpm dev
 
-API Endpoint'leri
+## API Endpoint'leri
+
 GET /api/models - Mevcut modelleri listeler
+
 POST /api/chat - Chat completion isteği gönderir
+
 POST /api/stream - Streaming chat completion isteği gönderir
 
-Örnekler
+## Örnekler
+
 Her bir örnek, SDK'nın farklı özelliklerini gösterir:
 
 models-example.ts: Model listesi alma
