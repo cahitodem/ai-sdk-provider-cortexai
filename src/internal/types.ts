@@ -1,3 +1,18 @@
+export interface ChatCompletionOptions {
+    stream?: boolean;
+    temperature?: number;
+    top_p?: number;
+    frequency_penalty?: number;
+    presence_penalty?: number;
+    max_tokens?: number;
+    stop?: string | string[];
+}
+
+export interface ChatCompletionRequest extends ChatCompletionOptions {
+    model: string;
+    messages: ChatMessage[];
+}
+
 export interface ModelCapabilities {
     vision: boolean;
     usage: boolean;
@@ -83,6 +98,7 @@ export interface ChatCompletionResponse {
 }
 
 export interface CortexAIConfig {
-    apiKey: string;
+    apiKey: string;        // sk-... ile başlayan API key
+    authToken: string;     // eyJ... ile başlayan JWT token
     baseUrl?: string;
 }
