@@ -15,6 +15,7 @@ Bu klasör CortexAI SDK'sının nasıl kullanılacağını gösteren örnek uygu
    # veya
    pnpm install
 4. Geliştirme sunucusunu başlatın:   
+   ```bash
    npm run dev
    # veya
    pnpm dev
