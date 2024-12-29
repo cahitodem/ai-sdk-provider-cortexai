@@ -13,8 +13,20 @@ export class CortexAIClient {
             throw new Error('API Key is required');
         }
 
-        this.models = new ModelsProvider(baseUrl, config.apiKey);
-        this.chat = new ChatProvider(baseUrl, config.apiKey);
+        if (!config.authToken) {
+            throw new Error('Auth Token is required');
+        }
+
+        if (!config.apiKey.startsWith('sk-')) {
+            throw new Error('Invalid API Key format. Should start with "sk-"');
+        }
+
+        if (!config.authToken.startsWith('eyJ')) {
+            throw new Error('Invalid Auth Token format. Should start with "eyJ"');
+        }
+
+        this.models = new ModelsProvider(baseUrl, config.apiKey, config.authToken);
+        this.chat = new ChatProvider(baseUrl, config.apiKey, config.authToken);
     }
 
     public get modelsList() {
