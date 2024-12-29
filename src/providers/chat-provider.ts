@@ -3,13 +3,24 @@ import { ChatCompletionRequest, ChatCompletionResponse } from '../internal/types
 
 export class ChatProvider extends BaseProvider {
     async createCompletion(request: ChatCompletionRequest): Promise<ChatCompletionResponse> {
+        validateCompletionRequest(request);
+        const defaultOptions = {
+            stream: false,
+            temperature: 0.7,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0
+        };
+
+        const finalRequest = {
+            ...defaultOptions,
+            ...request
+        };
+
         const response = await fetch(`${this.baseUrl}/api/chat/completions`, {
             method: 'POST',
             headers: this.getHeaders(),
-            body: JSON.stringify({
-                ...request,
-                stream: false
-            }),
+            body: JSON.stringify(finalRequest)
         });
 
         return this.handleResponse<ChatCompletionResponse>(response);
@@ -19,13 +30,15 @@ export class ChatProvider extends BaseProvider {
         request: ChatCompletionRequest,
         onChunk: (chunk: any) => void
     ): Promise<void> {
+        const finalRequest = {
+            ...request,
+            stream: true
+        };
+
         const response = await fetch(`${this.baseUrl}/api/chat/completions`, {
             method: 'POST',
             headers: { ...this.getHeaders(), 'Accept': 'text/event-stream' },
-            body: JSON.stringify({
-                ...request,
-                stream: true
-            }),
+            body: JSON.stringify(finalRequest)
         });
 
         if (!response.body) throw new Error('No response body');
